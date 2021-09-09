@@ -1,7 +1,8 @@
 *************************************************************************
-***      Minimizing the number of hops in a directed graph            ***
+***      Minimizar el costo de transporte de procesos en un           ***
+***      sistema de multiprocesamiento                                ***
 ***                                                                   ***
-***      Author: Germán Montoya                                       ***
+***      Author: Felipe Guzmán Avendaño - 201813791                   ***
 *************************************************************************
 
 Sets
@@ -24,38 +25,40 @@ c('o3','d3')=16;
 c('o3','d4')=5;
 
 Variables
-  x(i,j)      Indicates if the link i-j is selected or not.
-  z           Objective function
-  p1          Cantidad de procesador 1
-  p2          Cantidad de procesador 2
-  p3          Cantidad de procesador 3;
-Positive Variable p1;
-Positive Variable p2;
-Positive Variable p3;
+  p(i,j)      Procesos enviados de i a j
+  z           Objective function;
 
-Binary Variable x;
+Positive Variable p;
 
 Equations
 funcionObj               Funcion Objetivo
 
-procesador_1             procesador 1
-procesador_2             procesador 2
-procesador_3             procesador 3
-procesador_4             procesador 4;
-
-funcionObj               ..      z =e= sum((i,j), c(i,j) * x(i,j));
-
-procesador_1             ..      300*p1 + 500*p2 + 200*p3 =e= 200;
-procesador_2             ..      300*p1 + 500*p2 + 200*p3 =e= 300;
-procesador_3             ..      300*p1 + 500*p2 + 200*p3 =e= 100;
-procesador_4             ..      300*p1 + 500*p2 + 200*p3 =e= 400;
+procesadorO1             procesador origen 1
+procesadorO2             procesador origen 2
+procesadorO3             procesador origen 3
+procesadorD1             procesador destino 1
+procesadorD2             procesador destino 2
+procesadorD3             procesador destino 3
+procesadorD4             procesador destino 4;
 
 
-Model model1 /all/ ;
+funcionObj                       ..  z =e= sum((i,j), c(i,j) * p(i,j));
+
+procesadorO1(i)$(ord(i) = 1)     ..  sum((j), p(i,j)) =l= 300;
+procesadorO2(i)$(ord(i) = 2)     ..  sum((j), p(i,j)) =l= 500;
+procesadorO3(i)$(ord(i) = 3)     ..  sum((j), p(i,j)) =l= 200;
+
+procesadorD1(j)$(ord(j) = 1)     ..  sum((i), p(i,j)) =e= 200;
+procesadorD2(j)$(ord(j) = 2)     ..  sum((i), p(i,j)) =e= 300;
+procesadorD3(j)$(ord(j) = 3)     ..  sum((i), p(i,j)) =e= 100;
+procesadorD4(j)$(ord(j) = 4)     ..  sum((i), p(i,j)) =e= 400;
+
+
+Model Ejercicio2 /all/ ;
 option mip=CPLEX
-Solve model1 using mip maximazing z;
+Solve Ejercicio2 using mip minimazing z;
 
 Display c;
-Display x.l;
 Display z.l;
+Display p.l;
 
