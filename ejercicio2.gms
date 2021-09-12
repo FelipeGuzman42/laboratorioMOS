@@ -2,7 +2,8 @@
 ***      Minimizar el costo de transporte de procesos en un           ***
 ***      sistema de multiprocesamiento                                ***
 ***                                                                   ***
-***      Author: Felipe Guzmán Avendaño - 201813791                   ***
+***      Authors: Felipe Guzmán Avendaño - 201813791                  ***
+***               Juan Nicolás Bolaños   - 201991676                  ***
 *************************************************************************
 
 Sets
