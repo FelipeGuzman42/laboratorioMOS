@@ -25,10 +25,10 @@ Parameter
 t(i)  trabajadores al día /d1 17, d2 13, d3 15, d4 19, d5 14, d6 16, d7 11/;
 
 Variables
-  x(i)        Indica la cantidad de trabajadores que terminan de trabajr el día i
+  x(i)        Indica la cantidad de trabajadores que inician a trabajar el día i
   z           Objective function;
 
-*Integer variable x;
+Positive variable x;
 
 Equations
 objectiveFunction        objective function
@@ -37,9 +37,9 @@ diasSemana               diasSemana;
 objectiveFunction        ..  z =e= sum(i, x(i));
 diasSemana(i)            ..  sum(j, c(i,j) * x(j)) =g= t(i);
 
-Model model1 /all/ ;
+Model Ejercicio5 /all/ ;
 option mip=CPLEX
-Solve model1 using mip minimazing z;
+Solve Ejercicio5 using mip minimazing z;
 
 Display t;
 Display x.l;
