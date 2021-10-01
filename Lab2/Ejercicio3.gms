@@ -31,9 +31,9 @@ cubrir(i)                cubrir elementos;
 objectiveFunction        ..  z =e= sum(i, x(i));
 cubrir(i)                ..  sum(j$(c(i,j) <= 15), x(j)) =g= 1;
 
-Model model1 /all/ ;
+Model Ejercicio3 /all/ ;
 option mip=CPLEX
-Solve model1 using mip minimazing z;
+Solve Ejercicio3 using mip minimazing z;
 
 Display c;
 Display x.l;
