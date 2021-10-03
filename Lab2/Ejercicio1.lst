@@ -1,0 +1,319 @@
+GAMS 36.2.0  r433180e Released Sep  3, 2021 WEX-WEI x86 64bit/MS Windows - 10/03/21 08:52:25 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  *************************************************************************
+   2  ***      Ejercicio 1, problema de multiprocesamiento con              ***
+   3  ***                   distintos tipos de proceso                      ***
+   4  ***                                                                   ***
+   5  ***      Authors: Felipe Guzm�n Avenda�o - 201813791                  ***
+   6  ***               Juan Nicol�s Bola�os   - 201191676                  ***
+   7  *************************************************************************
+   8   
+   9  Sets
+  10    i   procesadores origen / o1*o3 /
+  11    j   procesadores destino / d1*d2 /
+  12   
+  13  Table  c(i,j)   costo
+  14           d1    d2
+  15  o1       300   500
+  16  o2       200   300
+  17  o3       600   300
+  18   
+  19  Parameter
+  20  ok(i) cantidad de origen kernel / o1 60, o2 80, o3 50 /
+  21  ou(i) cantidad de origen usuario / o1 80, o2 50, o3 50 /
+  22  dk(j) cantidad de destino kernel /d1 100, d2 90 /
+  23  du(j) cantidad de destino usuario /d1 60, d2 120 /;
+  24   
+  25   
+  26  Variables
+  27    u(i,j)      Procesos usuario enviados de i a j
+  28    k(i,j)      Procesos kernel enviados de i a j
+  29    z           Objective function;
+  30   
+  31  Positive Variable u;
+  32  Positive Variable k;
+  33   
+  34  Equations
+  35  funcionObj               Funcion Objetivo
+  36   
+  37  restriccionOrigenU        procesador origen usuario
+  38  restriccionOrigenK        procesador origen kernel
+  39  restriccionDestinoU       procesador destino usuario
+  40  restriccionDestinoK       procesador destino kernel;
+  41   
+  42   
+  43  funcionObj                       ..  z =e= sum((i,j), c(i,j) * (k(i,j) + k(i,j)));
+  44   
+  45  restriccionOrigenU(i)            ..  sum(j, u(i,j)) =e= ou(i);
+  46  restriccionOrigenK(i)            ..  sum(j, k(i,j)) =e= ok(i);
+  47  restriccionDestinoU(j)           ..  sum(i, u(i,j)) =e= du(j);
+  48  restriccionDestinoK(j)           ..  sum(i, k(i,j)) =e= dk(j);
+  49   
+  50   
+  51  Model Ejercicio1 /all/ ;
+  52  option mip=CPLEX
+  53  Solve Ejercicio1 using mip minimazing z;
+  54   
+  55  Display c;
+  56  Display z.l;
+  57  Display u.l;
+  58  Display k.l;
+
+
+COMPILATION TIME     =        0.015 SECONDS      3 MB  36.2.0 r433180e WEX-WEI
+GAMS 36.2.0  r433180e Released Sep  3, 2021 WEX-WEI x86 64bit/MS Windows - 10/03/21 08:52:25 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE Ejercicio1 Using MIP From line 53
+
+
+---- funcionObj  =E=  Funcion Objetivo
+
+funcionObj..  - 600*k(o1,d1) - 1000*k(o1,d2) - 400*k(o2,d1) - 600*k(o2,d2) - 1200*k(o3,d1) - 600*k(o3,d2) + z =E= 0 ; (LHS = 0)
+     
+
+---- restriccionOrigenU  =E=  procesador origen usuario
+
+restriccionOrigenU(o1)..  u(o1,d1) + u(o1,d2) =E= 80 ; (LHS = 0, INFES = 80 ****)
+     
+restriccionOrigenU(o2)..  u(o2,d1) + u(o2,d2) =E= 50 ; (LHS = 0, INFES = 50 ****)
+     
+restriccionOrigenU(o3)..  u(o3,d1) + u(o3,d2) =E= 50 ; (LHS = 0, INFES = 50 ****)
+     
+
+---- restriccionOrigenK  =E=  procesador origen kernel
+
+restriccionOrigenK(o1)..  k(o1,d1) + k(o1,d2) =E= 60 ; (LHS = 0, INFES = 60 ****)
+     
+restriccionOrigenK(o2)..  k(o2,d1) + k(o2,d2) =E= 80 ; (LHS = 0, INFES = 80 ****)
+     
+restriccionOrigenK(o3)..  k(o3,d1) + k(o3,d2) =E= 50 ; (LHS = 0, INFES = 50 ****)
+     
+
+---- restriccionDestinoU  =E=  procesador destino usuario
+
+restriccionDestinoU(d1)..  u(o1,d1) + u(o2,d1) + u(o3,d1) =E= 60 ; (LHS = 0, INFES = 60 ****)
+     
+restriccionDestinoU(d2)..  u(o1,d2) + u(o2,d2) + u(o3,d2) =E= 120 ; (LHS = 0, INFES = 120 ****)
+     
+
+---- restriccionDestinoK  =E=  procesador destino kernel
+
+restriccionDestinoK(d1)..  k(o1,d1) + k(o2,d1) + k(o3,d1) =E= 100 ; (LHS = 0, INFES = 100 ****)
+     
+restriccionDestinoK(d2)..  k(o1,d2) + k(o2,d2) + k(o3,d2) =E= 90 ; (LHS = 0, INFES = 90 ****)
+     
+GAMS 36.2.0  r433180e Released Sep  3, 2021 WEX-WEI x86 64bit/MS Windows - 10/03/21 08:52:25 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE Ejercicio1 Using MIP From line 53
+
+
+---- u  Procesos usuario enviados de i a j
+
+u(o1,d1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       restriccionOrigenU(o1)
+        1       restriccionDestinoU(d1)
+
+u(o1,d2)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       restriccionOrigenU(o1)
+        1       restriccionDestinoU(d2)
+
+u(o2,d1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       restriccionOrigenU(o2)
+        1       restriccionDestinoU(d1)
+
+REMAINING 3 ENTRIES SKIPPED
+
+---- k  Procesos kernel enviados de i a j
+
+k(o1,d1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+     -600       funcionObj
+        1       restriccionOrigenK(o1)
+        1       restriccionDestinoK(d1)
+
+k(o1,d2)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+    -1000       funcionObj
+        1       restriccionOrigenK(o1)
+        1       restriccionDestinoK(d2)
+
+k(o2,d1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+     -400       funcionObj
+        1       restriccionOrigenK(o2)
+        1       restriccionDestinoK(d1)
+
+REMAINING 3 ENTRIES SKIPPED
+
+---- z  Objective function
+
+z
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       funcionObj
+
+GAMS 36.2.0  r433180e Released Sep  3, 2021 WEX-WEI x86 64bit/MS Windows - 10/03/21 08:52:25 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE Ejercicio1 Using MIP From line 53
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           5     SINGLE EQUATIONS           11
+BLOCKS OF VARIABLES           3     SINGLE VARIABLES           13
+NON ZERO ELEMENTS            31
+
+
+GENERATION TIME      =        0.016 SECONDS      4 MB  36.2.0 r433180e WEX-WEI
+GAMS 36.2.0  r433180e Released Sep  3, 2021 WEX-WEI x86 64bit/MS Windows - 10/03/21 08:52:25 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE Ejercicio1 Using MIP From line 53
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   Ejercicio1          OBJECTIVE  z
+     TYPE    MIP                 DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  53
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE           106000.0000
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         1    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 20.1.0.1 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.01 ticks)
+
+
+Optimal solution found
+Objective:       106000.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU funcionObj          .              .              .             1.0000      
+
+  funcionObj  Funcion Objetivo
+
+---- EQU restriccionOrigenU  procesador origen usuario
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+o1        80.0000        80.0000        80.0000         EPS         
+o2        50.0000        50.0000        50.0000         EPS         
+o3        50.0000        50.0000        50.0000         EPS         
+
+---- EQU restriccionOrigenK  procesador origen kernel
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+o1        60.0000        60.0000        60.0000       800.0000      
+o2        80.0000        80.0000        80.0000       600.0000      
+o3        50.0000        50.0000        50.0000       600.0000      
+
+---- EQU restriccionDestinoU  procesador destino usuario
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+d1        60.0000        60.0000        60.0000         EPS         
+d2       120.0000       120.0000       120.0000          .          
+
+---- EQU restriccionDestinoK  procesador destino kernel
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+d1       100.0000       100.0000       100.0000      -200.0000      
+d2        90.0000        90.0000        90.0000          .          
+
+---- VAR u  Procesos usuario enviados de i a j
+
+             LOWER          LEVEL          UPPER         MARGINAL
+
+o1.d1          .              .            +INF            EPS         
+o1.d2          .            80.0000        +INF             .          
+o2.d1          .            10.0000        +INF             .          
+o2.d2          .            40.0000        +INF             .          
+o3.d1          .            50.0000        +INF             .          
+o3.d2          .              .            +INF            EPS         
+
+---- VAR k  Procesos kernel enviados de i a j
+
+             LOWER          LEVEL          UPPER         MARGINAL
+
+o1.d1          .            60.0000        +INF             .          
+o1.d2          .              .            +INF          200.0000      
+o2.d1          .            40.0000        +INF             .          
+o2.d2          .            40.0000        +INF             .          
+o3.d1          .              .            +INF          800.0000      
+o3.d2          .            50.0000        +INF             .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR z                 -INF       106000.0000        +INF             .          
+
+  z  Objective function
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 36.2.0  r433180e Released Sep  3, 2021 WEX-WEI x86 64bit/MS Windows - 10/03/21 08:52:25 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     55 PARAMETER c  costo
+
+            d1          d2
+
+o1     300.000     500.000
+o2     200.000     300.000
+o3     600.000     300.000
+
+
+----     56 VARIABLE z.L                   =   106000.000  Objective function
+
+----     57 VARIABLE u.L  Procesos usuario enviados de i a j
+
+            d1          d2
+
+o1                  80.000
+o2      10.000      40.000
+o3      50.000
+
+
+----     58 VARIABLE k.L  Procesos kernel enviados de i a j
+
+            d1          d2
+
+o1      60.000
+o2      40.000      40.000
+o3                  50.000
+
+
+
+EXECUTION TIME       =        0.063 SECONDS      4 MB  36.2.0 r433180e WEX-WEI
+
+
+USER: GAMS Demo license for Juan Nicolas Bolanos PertG210818|0002CO-GEN
+      Universidad de los andes, Colombia                       DL046170
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Nicolas\Documents\Repositorios\laboratorioMOS\Lab2\Ejercicio1.gms
+Output     C:\Users\Nicolas\Documents\Repositorios\laboratorioMOS\Lab2\Ejercicio1.lst

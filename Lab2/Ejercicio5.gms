@@ -1,13 +1,13 @@
 *************************************************************************
 ***      Ejercicio 5, problema de trabajadores requeridos para        ***
-***                      los días de la semana                        ***
+***                      los dï¿½as de la semana                        ***
 ***                                                                   ***
-***      Authors: Felipe Guzmán Avendaño - 201813791                  ***
-***               Juan Nicolás Bolaños   - 201991676                  ***
+***      Authors: Felipe Guzmï¿½n Avendaï¿½o - 201813791                  ***
+***               Juan Nicolï¿½s Bolaï¿½os   - 201911676                  ***
 *************************************************************************
 
 Sets
-  i     días / d1*d7 /
+  i     dï¿½as / d1*d7 /
 alias(j,i);
 
 Table  c(i,j)   costo
@@ -22,10 +22,10 @@ d7       0     0     1     1     1     1     1
 
 
 Parameter
-t(i)  trabajadores al día /d1 17, d2 13, d3 15, d4 19, d5 14, d6 16, d7 11/;
+t(i)  trabajadores al dï¿½a /d1 17, d2 13, d3 15, d4 19, d5 14, d6 16, d7 11/;
 
 Variables
-  x(i)        Indica la cantidad de trabajadores que inician a trabajar el día i
+  x(i)        Indica la cantidad de trabajadores que inician a trabajar el dï¿½a i
   z           Objective function;
 
 Positive variable x;

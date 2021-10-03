@@ -2,8 +2,8 @@
 ***      Ejercicio 1, problema de multiprocesamiento con              ***
 ***                   distintos tipos de proceso                      ***
 ***                                                                   ***
-***      Authors: Felipe Guzmán Avendaño - 201813791                  ***
-***               Juan Nicolás Bolaños   - 201991676                  ***
+***      Authors: Felipe Guzmï¿½n Avendaï¿½o - 201813791                  ***
+***               Juan Nicolï¿½s Bolaï¿½os   - 201191676                  ***
 *************************************************************************
 
 Sets

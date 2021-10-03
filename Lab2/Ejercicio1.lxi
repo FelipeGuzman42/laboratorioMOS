@@ -1,0 +1,26 @@
+B 3 C o m p i l a t i o n
+B 69 Equation Listing    SOLVE Ejercicio1 Using MIP From line 53
+D 72 funcionObj
+D 77 restriccionOrigenU
+D 86 restriccionOrigenK
+D 95 restriccionDestinoU
+D 102 restriccionDestinoK
+B 110 Column Listing      SOLVE Ejercicio1 Using MIP From line 53
+E 113 u
+E 132 k
+E 154 z
+B 162 Model Statistics    SOLVE Ejercicio1 Using MIP From line 53
+B 175 Solution Report     SOLVE Ejercicio1 Using MIP From line 53
+F 208 funcionObj
+F 212 restriccionOrigenU
+F 220 restriccionOrigenK
+F 228 restriccionDestinoU
+F 235 restriccionDestinoK
+G 242 u
+G 253 k
+G 266 z
+B 276 E x e c u t i o n
+I 276 c
+I 287 z
+I 288 u
+I 297 k
