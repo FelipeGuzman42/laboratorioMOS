@@ -6,8 +6,10 @@
 *************************************************************************
 
 Sets
-  i   nodos inalámbricos  /n1*n7/
-  d   dimensiones del plano /d1*d2/
+  i      nodos /n1*n7/
+  int(i) nodos intermedios /n1,n2,n5,n7/
+  e(i)   nodos destino /n6/
+  d      dimensiones del plano /d1*d2/
   alias(i,j,k);
 
 Table c(i,d)   coordenadas de los nodos
@@ -22,10 +24,16 @@ n7       14      12
 ;
 
 Parameter
-distancia(i,j) distancia entre 2 nodos
-conexion       distancia minima para haber conexion
+distancia(i,j)      distancia entre 2 nodos
+conexion            distancia minima para haber conexion
 existeConexion(i,j) determina si existe conexion entre 2 nodos
-arco(i,j)      arco entre 2 nodos si hay conexion;
+arco(i,j)           arco entre 2 nodos si hay conexion
+intermediate(int)   se almacenan las posiciones de los nodos intermedios
+destinations(e)     almacena posicion del nodo destino;
+
+intermediate(int) = int.uel;
+
+destinations(e) = e.uel;
 
 arco(i,j) = 999;
 
@@ -43,24 +51,27 @@ loop((i),
 display arco;
 
 Variables
-    x(i,j,k) indica los arcos escogidos para la ruta
+    x(i,j,e) indica el arco fue escogido para la ruta
     z    objective function;
 
-Binary Variable s;
+Binary Variable x;
 
 Equations
 objectiveFunction        objective function
-nb(i,j)                  balance de nodos;
+sourceNode(i)            source node
+destinationNodes         destination nodes
+intermediateNode(int, e) intermediate node
+noRepeatedLink(i,j,e)    no repeated links;
 
-objectiveFunction           .. z =e= sum((i,j,k), arco(j,k)*x(i,j,k));
-nb(i,j)$(not sameas(i,j)) .. sum(k$arco(k,j), x(i,k,j)) =g= sum(k$arco(j,k), x(i,j,k)) + 1;
+objectiveFunction            .. z =e= sum((i,j,e), arco(i,j)*x(i,j,e));
+sourceNode(i)$(ord(i) = 4)   .. 1 =e= sum((j,e), x(i,j,e));
+destinationNodes             .. 1 =e= sum((i,j,e)$(destinations(e)=ord(j)), x(i,j,e));
+intermediateNode(int, e)     .. 0 =e= sum((j), x(int,j,e)) - sum((j), x(j,int,e));
+noRepeatedLink(i,j,e)        .. 1 =g= x(i,j,e) + x(j,i,e);
 
 Model Ejercicio4 / all /;
 
-solve Ejercicio4 using lp minimizing z;
+solve Ejercicio4 using mip minimizing z;
 
-Parameter sroute(i,j);
-
-sroute(i,j) = -nb.m(i,j);
-
-display sroute;
+Display x.l;
+Display z.l;
