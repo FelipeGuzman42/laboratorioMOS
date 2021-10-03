@@ -1,9 +1,9 @@
 *************************************************************************
 ***      Ejercicio 5, problema de trabajadores requeridos para        ***
-***                      los d�as de la semana                        ***
+***                      los d�as de la semana                      ***
 ***                                                                   ***
-***      Authors: Felipe Guzm�n Avenda�o - 201813791                  ***
-***               Juan Nicol�s Bola�os   - 201911676                  ***
+***      Authors: Felipe Guzm�n Avenda�o - 201813791              ***
+***               Juan Nicol�s Bola�os   - 201911676              ***
 *************************************************************************
 
 Sets

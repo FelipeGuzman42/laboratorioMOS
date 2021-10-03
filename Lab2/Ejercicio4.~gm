@@ -35,13 +35,5 @@ loop((i),
      );
 );
 
-Variables
-    s(i) indica si un nodo i fue seleccionado para la ruta
-    z    objective function;
 
-Binary Variable s;
 
-Equations
-objectiveFunction        objective function;
-
-objectiveFunction           .. z =e= sum((i,j), distancia(i,j)*s(i))

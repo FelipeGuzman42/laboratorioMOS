@@ -1,25 +1,23 @@
 ***      Ejercicio 2, problema del equipo de bascketball              ***
 ***                                                                   ***
-***      Authors: Felipe Guzm�n Avenda�o - 201813791                  ***
-***               Juan Nicol�s Bola�os   - 201911676                  ***
+***      Authors: Felipe Guzm�n Avenda�o - 201813791              ***
+***               Juan Nicol�s Bola�os   - 201911676              ***
 *************************************************************************
 
 Sets
  i  jugadores /j1*j7/
- alias(i, j)  habilidades y roles
- e  expectativas /e1*e6/;
-
-Parameter
+ e  expectativas /e1*e6/
+ alias(i, j);
 
 Table h(i,j)     jugadores y habilidades
-         defensa centro ataque ctlBalon Disparo Rebotes Defensa
-jugador1    0       0      1      3        3       1       3
-jugador2    0       1      0      2        1       3       2
-jugador3    1       0      1      2        3       2       2
-jugador4    1       1      0      1        3       3       1
-jugador5    1       0      1      3        3       3       3
-jugador6    1       1      0      3        1       2       3
-jugador7    1       0      1      3        2       2       1
+      j1      j2     j3     j4       j5      j6      j7
+j1    0       0      1      3        3       1       3
+j2    0       1      0      2        1       3       2
+j3    1       0      1      2        3       2       2
+j4    1       1      0      1        3       3       1
+j5    1       0      1      3        3       3       3
+j6    1       1      0      3        1       2       3
+j7    1       0      1      3        2       2       1
 ;
 
 Parameter
@@ -52,14 +50,24 @@ Binary Variable s;
 
 Equations
 objectiveFunction        objective function
-expectativas             expectativas del equipo
+defensas                 defensas del equipo
+centros                  centros del equipo
+atacantes                atacantes del equipo
+ctlBalon                 promedio control balon del equipo
+disparo                  promedio disparo del equipo
+rebote                   promedio rebote del equipo
 totalJugadores           total de jugadores dentro del equipo
 jugadoresExclusivos       restricción exclusdiva frente a j2 y j3;
 
-objectiveFunction(j)$(ord(j) = 7)  ..   z =e= sum((i), h(i,j));
-expectativas(e)                    ..   x(e) =l= sum((e), h(e,e))
-totalJugadores                     ..   total =e= sum((i), s(i))
-jugadoresExclusivos                ..   excluidos =e= sum((i), excluido(i))
+objectiveFunction(j)$(ord(j) = 7)  ..   z =e= sum((i), h(i,j)*s(i));
+defensas(j)$(ord(j) = 1)           ..   x('e1') =l= sum((i), h(i,j)*s(i));
+centros(j)$(ord(j) = 2)            ..   x('e2') =l= sum((i), h(i,j)*s(i));
+atacantes(j)$(ord(j) = 3)          ..   x('e3') =l= sum((i), h(i,j)*s(i));
+ctlBalon(j)$(ord(j) = 4)           ..   x('e4') =l= sum((i), h(i,j)*s(i))/total;
+disparo(j)$(ord(j) = 5)            ..   x('e5') =l= sum((i), h(i,j)*s(i))/total;
+rebote(j)$(ord(j) = 6)             ..   x('e6') =l= sum((i), h(i,j)*s(i))/total;
+totalJugadores                     ..   total =e= sum((i), s(i));
+jugadoresExclusivos                ..   excluidos =e= sum((i), excluido(i)*s(i));
 
 Model Ejercicio2 /all/ ;
 option mip=CPLEX
