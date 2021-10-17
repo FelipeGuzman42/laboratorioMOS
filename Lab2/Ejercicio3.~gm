@@ -1,8 +1,8 @@
 *************************************************************************
-***      Ejercicio 3, problema de cobertura con tiempo m�ximo         ***
+***      Ejercicio 3, problema de cobertura con tiempo m�ximo       ***
 ***                                                                   ***
-***      Authors: Felipe Guzm�n Avenda�o - 201813791                  ***
-***               Juan Nicol�s Bola�os   - 201911676                  ***
+***      Authors: Felipe Guzm�n Avenda�o - 201813791              ***
+***               Juan Nicol�s Bola�os   - 201911676              ***
 *************************************************************************
 
 Sets

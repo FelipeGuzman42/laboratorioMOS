@@ -1,9 +1,9 @@
 *************************************************************************
 ***      Ejercicio 5, problema de trabajadores requeridos para        ***
-***                      los dï¿½as de la semana                      ***
+***                      los dàas de la semana                        ***
 ***                                                                   ***
-***      Authors: Felipe Guzmï¿½n Avendaï¿½o - 201813791              ***
-***               Juan Nicolï¿½s Bolaï¿½os   - 201911676              ***
+***      Authors: Felipe Guzmán Avendaño - 201813791                  ***
+***               Juan Nicolás Bolaños   - 201911676                  ***
 *************************************************************************
 
 Sets
@@ -25,7 +25,7 @@ Parameter
 t(i)  trabajadores al dï¿½a /d1 17, d2 13, d3 15, d4 19, d5 14, d6 16, d7 11/;
 
 Variables
-  x(i)        Indica la cantidad de trabajadores que inician a trabajar el dï¿½a i
+  x(i)        Indica la cantidad de trabajadores que inician a trabajar el dia i
   z           Objective function;
 
 Positive variable x;

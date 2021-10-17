@@ -1,7 +1,7 @@
-***      Ejercicio 2, problema del equipo de bascketball              ***
+***      Ejercicio 2, problema del equipo de basketball               ***
 ***                                                                   ***
-***      Authors: Felipe Guzmï¿½n Avendaï¿½o - 201813791              ***
-***               Juan Nicolï¿½s Bolaï¿½os   - 201911676              ***
+***      Authors: Felipe Guzmán Avendaño - 201813791                  ***
+***               Juan Nicolás Bolaños   - 201911676                  ***
 *************************************************************************
 
 Sets
@@ -57,7 +57,7 @@ ctlBalon                 promedio control balon del equipo
 disparo                  promedio disparo del equipo
 rebote                   promedio rebote del equipo
 totalJugadores           total de jugadores dentro del equipo
-jugadoresExclusivos       restricciÃ³n exclusdiva frente a j2 y j3;
+jugadoresExclusivos       restriccion exclusdiva frente a j2 y j3;
 
 objectiveFunction(j)$(ord(j) = 7)  ..   z =e= sum((i), h(i,j)*s(i));
 defensas(j)$(ord(j) = 1)           ..   x('e1') =l= sum((i), h(i,j)*s(i));

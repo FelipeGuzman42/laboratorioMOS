@@ -1,8 +1,8 @@
 *************************************************************************
 ***         Ejercicio 4, problema de los nodos inalámbricos           ***
 ***                                                                   ***
-***      Authors: Felipe Guzmï¿½n Avendaï¿½o - 201813791              ***
-***               Juan Nicolï¿½s Bolaï¿½os   - 201911676              ***
+***      Authors: Felipe Guzmán Avendaño - 201813791                  ***
+***               Juan Nicolás Bolaños   - 201911676                  ***
 *************************************************************************
 
 Sets
