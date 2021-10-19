@@ -2,6 +2,8 @@
 """
 Ejercicio 4: Problema específico de asignar canciones en un cassette.
 
+La variable binaria indica 1 si esta en el lado A, 0 si esta en el lado B.
+
 @authors: Felipe Guzmán Avendaño - 201813791
           Juan Nicolás Bolaños - 201911676 
 """
@@ -31,8 +33,8 @@ Model.tiempoInicial = Constraint(expr = sum(Model.x[i] * duracion[i] for i in N)
 Model.tiempoFinal = Constraint(expr = sum(Model.x[i] * duracion[i] for i in N) <= 16)
 Model.cancionesBlues = Constraint(expr = Model.x[1] + Model.x[3] + Model.x[5] + Model.x[8] == 2)
 Model.cancionesARock = Constraint(expr = Model.x[2] + Model.x[4] + Model.x[6] + Model.x[8] >= 3)
-Model.cancion1No5LadoA = Constraint(expr = Model.x[1] + Model.x[5] >= 1)
-Model.canciones24Atiene1B = Constraint(expr = Model.x[2] + Model.x[4] + Model.x[1] <= 2)
+Model.cancion1No5LadoA = Constraint(expr =  1 - Model.x[5] >= Model.x[1])
+Model.canciones24Atiene1B = Constraint(expr = Model.x[2] + Model.x[4] <= 2 - Model.x[1])
     
 # APPLYING THE SOLVER******************************************************************
 SolverFactory('glpk').solve(Model)
