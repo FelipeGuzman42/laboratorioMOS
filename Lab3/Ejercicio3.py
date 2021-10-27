@@ -15,9 +15,9 @@ from pyomo.opt import SolverFactory
 Model = ConcreteModel()
 
 # SETS & PARAMETERS********************************************************************
-nodos = 6
+nodos = 7
 
-N = RangeSet(0, nodos)
+N = RangeSet(1, nodos)
 
 Model.coordenadas = {(1, 1): 20, (1, 2): 6,
                      (2, 1): 22, (2, 2): 1,
@@ -33,8 +33,8 @@ Model.conexion = 20
 
 for i in N:
     for j in N:
-        distanciaPre = math.sqrt((Model.coordenadas[i+1, 1]-Model.coordenadas[j+1, 1])**2 + (
-            Model.coordenadas[i+1, 2]-Model.coordenadas[j+1, 2])**2)
+        distanciaPre = math.sqrt((Model.coordenadas[i, 1]-Model.coordenadas[j, 1])**2 + (
+            Model.coordenadas[i, 2]-Model.coordenadas[j, 2])**2)
         if distanciaPre <= Model.conexion and distanciaPre != 0:
             Model.distancia[i, j] = distanciaPre
         else:
@@ -51,21 +51,21 @@ Model.obj = Objective(
 
 
 def source_rule(Model, i):
-    if i == 3:
+    if i == 4:
         return sum(Model.x[i, j] for j in N) == 1
     else:
         return Constraint.Skip
 
 
 def destination_rule(Model, j):
-    if j == 5:
+    if j == 6:
         return sum(Model.x[i, j] for i in N) == 1
     else:
         return Constraint.Skip
 
 
 def intermediate_rule(Model, i):
-    if i != 3 and i != 5:
+    if i != 4 and i != 6:
         return sum(Model.x[i, j] for j in N) - sum(Model.x[j, i] for j in N) == 0
     else:
         return Constraint.Skip
