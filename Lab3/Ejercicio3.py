@@ -27,13 +27,7 @@ Model.coordenadas = {(1, 1): 20, (1, 2): 6,
                      (6, 1): 29, (6, 2): 2,
                      (7, 1): 14, (7, 2): 12}
 
-distancia = [[0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0]]
+Model.distancia = Param(N, N, mutable=True)
 
 Model.conexion = 20
 
@@ -42,18 +36,16 @@ for i in N:
         distanciaPre = math.sqrt((Model.coordenadas[i+1, 1]-Model.coordenadas[j+1, 1])**2 + (
             Model.coordenadas[i+1, 2]-Model.coordenadas[j+1, 2])**2)
         if distanciaPre <= Model.conexion and distanciaPre != 0:
-            distancia[i][j] = distanciaPre
+            Model.distancia[i, j] = distanciaPre
         else:
-            distancia[i][j] = 999
-
-print(distancia)
+            Model.distancia[i, j] = 999
 
 # VARIABLES****************************************************************************
 Model.x = Var(N, N, domain=Binary)
 
 # OBJECTIVE FUNCTION*******************************************************************
 Model.obj = Objective(
-    expr=sum(Model.x[i, j]*distancia[i][j] for i in N for j in N))
+    expr=sum(Model.x[i, j]*Model.distancia[i, j] for i in N for j in N))
 
 # CONSTRAINTS**************************************************************************
 
