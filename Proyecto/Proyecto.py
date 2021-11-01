@@ -126,12 +126,12 @@ def intermediate_rule(Model, i):
         return Constraint.Skip
 
 
-Model.payload = Constraint(N, rule=payload_rule)
-Model.time = Constraint(N, rule=time_rule)
-Model.capacity = Constraint(N, rule=capacity_rule)
-Model.source = Constraint(N, rule=source_rule)
-Model.destination = Constraint(N, rule=destination_rule)
-Model.intermediate = Constraint(N, rule=intermediate_rule)
+Model.payload = Constraint(motos, rule=payload_rule)
+Model.time = Constraint(rule=time_rule)
+#Model.capacity = Constraint(rule=capacity_rule)
+#Model.source = Constraint(N, motos, rule=source_rule)
+#Model.destination = Constraint(N, rule=destination_rule)
+#Model.intermediate = Constraint(N, rule=intermediate_rule)
 
 # APPLYING THE SOLVER******************************************************************
 SolverFactory('glpk').solve(Model)
