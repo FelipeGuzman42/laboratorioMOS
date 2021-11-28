@@ -96,7 +96,10 @@ def time_rule(Model):
 
 
 def capacity_rule(Model):
-    return Model.r*P >= pedidos
+    if sum(Model.r for _ in motos) >= pedidos:
+        return Constraint.Skip
+    else:
+        return Constraint.Infeasible
 
 # Solamente debe haber una pizzería en el grafo
 
@@ -111,7 +114,7 @@ def source_rule(Model, i, m):
 
 
 def destination_rule(Model, m):
-    if j in nodoPedido:
+    if j == nodoPedido:
         return sum(Model.x[i, j, m, p] for i in N for p in nodoPedido) == 1
     else:
         return Constraint.Skip
@@ -128,9 +131,9 @@ def intermediate_rule(Model, i):
 
 Model.payload = Constraint(motos, rule=payload_rule)
 Model.time = Constraint(rule=time_rule)
-#Model.capacity = Constraint(rule=capacity_rule)
+Model.capacity = Constraint(rule=capacity_rule)
 Model.source = Constraint(N, motos, rule=source_rule)
-#Model.destination = Constraint(N, rule=destination_rule)
+Model.destination = Constraint(N, rule=destination_rule)
 Model.intermediate = Constraint(N, rule=intermediate_rule)
 
 # APPLYING THE SOLVER******************************************************************
