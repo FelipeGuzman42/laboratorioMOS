@@ -15,8 +15,8 @@ Model = ConcreteModel()
 
 # SETS & PARAMETERS********************************************************************
 nodos = 9
-pedidos = 1
-P = 1
+pedidos = 2
+P = 2
 
 N = RangeSet(1, nodos)
 
@@ -32,7 +32,7 @@ Model.coordenadas = {(1, 1): 0, (1, 2): 0,
                      (9, 1): 10, (9, 2): 10}
 
 # Nodo que tiene el pedido
-nodoPedido = {6}
+nodoPedido = {6, 8}
 
 # Nodo de la pizzeria
 nodoPizzeria = 1
