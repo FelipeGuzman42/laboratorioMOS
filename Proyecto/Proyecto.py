@@ -15,8 +15,8 @@ Model = ConcreteModel()
 
 # SETS & PARAMETERS********************************************************************
 nodos = 9
-pedidos = 3
-P = 2
+pedidos = 1
+P = 1
 
 N = RangeSet(1, nodos)
 
@@ -32,7 +32,7 @@ Model.coordenadas = {(1, 1): 0, (1, 2): 0,
                      (9, 1): 10, (9, 2): 10}
 
 # Nodo que tiene el pedido
-nodoPedido = {6, 7, 9}
+nodoPedido = {6}
 
 # Nodo de la pizzeria
 nodoPizzeria = 1
@@ -49,7 +49,6 @@ for i in N:
 
 Model.distancia[1, 2] = 5
 Model.distancia[2, 3] = 5
-Model.distancia[2, 7] = 5
 Model.distancia[1, 4] = 5
 Model.distancia[1, 5] = 10
 Model.distancia[3, 6] = 5
@@ -60,7 +59,7 @@ Model.distancia[7, 8] = 5
 Model.distancia[8, 9] = 5
 
 # Cantidad de pizzas que lleva la moto
-Model.r = 2
+Model.r = 1
 
 # Cantidad de minutos que se puede demorar el pedido
 Model.t = 30
@@ -80,21 +79,15 @@ Model.obj = Objective(expr=sum(Model.x[i, j, m, p]*Model.distancia[i, j]
 # CONSTRAINTS**************************************************************************
 
 # La carga de cualquier moto no debe exceder r
-
-
 def payload_rule(Model, i):
     return Model.k[i] <= Model.r
 
 # Los pedidos deben ser entregados en un tiempo menor a t
-
-
 def time_rule(Model):
     return sum(Model.x[i, j, m, p]*Model.distancia[i, j]
                for i in N for j in N for m in motos for p in nodoPedido) <= Model.t
 
 # El número de pedidos no debe sobrepasar la capacidad del restaurante de entregarlos (r*P)
-
-
 def capacity_rule(Model):
     if sum(Model.r for _ in motos) >= pedidos:
         return Constraint.Skip
@@ -102,8 +95,6 @@ def capacity_rule(Model):
         return Constraint.Infeasible
 
 # Solamente debe haber una pizzería en el grafo
-
-
 def source_rule(Model, i, m):
     if i == nodoPizzeria:
         return sum(Model.x[i, j, m, p] for j in N for p in nodoPedido) == 1
@@ -111,17 +102,13 @@ def source_rule(Model, i, m):
         return Constraint.Skip
 
 # Para cada pedido del restaurante debe haber un nodo en el grafo que represente el lugar de entrega
-
-
-def destination_rule(Model, m):
-    if j == nodoPedido:
-        return sum(Model.x[i, j, m, p] for i in N for p in nodoPedido) == 1
+def destination_rule(Model, j):
+    if j in nodoPedido:
+        return sum(Model.x[i, j, m, p] for i in N for m in motos for p in nodoPedido) == 1
     else:
         return Constraint.Skip
 
 #  No debe haber nodos repetidos en las ramas para cada camino escogido por las motos
-
-
 def intermediate_rule(Model, i):
     if i != nodoPizzeria and i not in nodoPedido:
         return sum(Model.x[i, j, m, p] for j in N for m in motos for p in nodoPedido) - sum(Model.x[j, i, m, p] for j in N for m in motos for p in nodoPedido) == 0
