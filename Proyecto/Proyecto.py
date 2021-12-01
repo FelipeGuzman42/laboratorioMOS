@@ -120,7 +120,7 @@ Model.payload = Constraint(motos, rule=payload_rule)
 Model.time = Constraint(rule=time_rule)
 Model.capacity = Constraint(rule=capacity_rule)
 Model.source = Constraint(N, motos, rule=source_rule)
-Model.destination = Constraint(N, rule=destination_rule)
+Model.destination = Constraint(N, N, rule=destination_rule)
 Model.intermediate = Constraint(N, rule=intermediate_rule)
 
 # APPLYING THE SOLVER******************************************************************
